@@ -113,3 +113,6 @@ venv.bak/
 
 # SQLlite
 db.sqlite3
+
+# vim swap files
+*.swp

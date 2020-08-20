@@ -116,3 +116,6 @@ db.sqlite3
 
 # vim swap files
 *.swp
+
+# Selenium test driver log
+geckodriver.log

@@ -4,3 +4,6 @@ test:
 
 functional_test:
 	python functional_tests.py
+
+run:
+	python manage.py runserver

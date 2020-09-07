@@ -3,7 +3,7 @@ test:
 	pytest lists --disable-warnings
 
 functional_test:
-	pytest functional_tests.py
+	pytest functional_tests --disable-warnings
 
 run:
 	python manage.py runserver

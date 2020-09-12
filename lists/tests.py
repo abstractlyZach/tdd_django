@@ -21,18 +21,11 @@ class HomePageTest(TestCase):
     def test_redirects_after_post(self):
         response = self.client.post("/", data={"item_text": "A new list item"})
         assert response.status_code == 302
-        assert response["location"] == "/"
+        assert response["location"] == "/lists/the-only-list-in-the-world/"
 
     def test_only_saves_items_when_necessary(self):
         self.client.get("/")
         assert Item.objects.count() == 0
-
-    def test_displays_all_list_items(self):
-        Item.objects.create(text="itemy 1")
-        Item.objects.create(text="itemy 2")
-        response = self.client.get("/")
-        assert "itemy 1" in response.content.decode()
-        assert "itemy 2" in response.content.decode()
 
 
 class ItemModelTest(TestCase):
@@ -51,3 +44,16 @@ class ItemModelTest(TestCase):
         second_saved_item = saved_items[1]
         assert first_saved_item.text == "The first (ever) list item"
         assert second_saved_item.text == "Item the second"
+
+
+class ListViewTest(TestCase):
+    def test_displays_all_items(self):
+        Item.objects.create(text="itemey 1")
+        Item.objects.create(text="itemey 2")
+        response = self.client.get("/lists/the-only-list-in-the-world/")
+        self.assertContains(response, "itemey 1")
+        self.assertContains(response, "itemey 2")
+
+    def test_uses_list_template(self):
+        response = self.client.get("/lists/the-only-list-in-the-world/")
+        self.assertTemplateUsed(response, "list.html")

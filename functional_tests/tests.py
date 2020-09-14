@@ -113,6 +113,6 @@ class NewVisitorTest(LiveServerTestCase):
         # Again, there is no trace of Edith's list
         page_text = self.browser.find_element_by_tag_name("body").text
         assert "Buy peacock feathers" not in page_text
-        assert "Buy milk" in page
+        assert "Buy milk" in page_text
 
         # satisfied, they both go back to sleep

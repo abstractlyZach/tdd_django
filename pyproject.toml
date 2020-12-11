@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "tdd_django"
+version = "0.1.0"
+description = ""
+authors = ["abstractlyZach <zach3lee@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+django = "<1.12"
+selenium = "<4"
+
+[tool.poetry.dev-dependencies]
+pytest-django = "^4.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

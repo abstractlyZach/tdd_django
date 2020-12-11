@@ -1,9 +1,9 @@
 test:
 	# disabling warnings because we're on an old version of django
-	pytest lists --disable-warnings
+	poetry run pytest lists --disable-warnings
 
 functional_test:
-	pytest functional_tests --disable-warnings
+	poetry run pytest functional_tests --disable-warnings
 
 run:
-	python manage.py runserver
+	poetry run manage.py runserver

@@ -6,4 +6,4 @@ functional_test:
 	poetry run pytest functional_tests --disable-warnings
 
 run:
-	poetry run manage.py runserver
+	poetry run python manage.py runserver

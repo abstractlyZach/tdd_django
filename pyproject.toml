@@ -13,6 +13,7 @@ gunicorn = "^20.0.4"
 [tool.poetry.dev-dependencies]
 pytest-django = "^4.1.0"
 Fabric3 = "^1.14.post1"
+black = "^20.8b1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

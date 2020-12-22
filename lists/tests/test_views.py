@@ -1,7 +1,10 @@
+import pytest
 from django.test import TestCase
 from django.utils.html import escape
 
+from lists.forms import ExistingListItemForm
 from lists.forms import ItemForm
+from lists.forms import DUPLICATE_ITEM_ERROR
 from lists.forms import EMPTY_ITEM_ERROR
 from lists.models import Item
 from lists.models import List
@@ -95,17 +98,26 @@ class ListViewTest(TestCase):
 
     def test_for_invalid_input_passes_form_to_template(self):
         response = self.post_invalid_input()
-        assert isinstance(response.context["form"], ItemForm)
+        assert isinstance(response.context["form"], ExistingListItemForm)
 
     def test_for_invalid_input_shows_error_on_page(self):
         response = self.post_invalid_input()
         expected_error = escape(EMPTY_ITEM_ERROR)
         assert expected_error in response.content.decode()
 
+    def test_duplicate_item_validation_errors_end_up_on_lists_page(self):
+        list1 = List.objects.create()
+        item1 = Item.objects.create(list=list1, text="textey")
+        response = self.client.post(f"/lists/{list1.id}/", data={"text": "textey"})
+        expected_error = escape(DUPLICATE_ITEM_ERROR)
+        assert expected_error in response.content.decode()
+        self.assertTemplateUsed(response, "list.html")
+        assert Item.objects.all().count() == 1
+
     def test_displays_item_form(self):
         list_ = List.objects.create()
         response = self.client.get(f"/lists/{list_.id}/")
-        assert isinstance(response.context["form"], ItemForm)
+        assert isinstance(response.context["form"], ExistingListItemForm)
         assert 'name="text"' in response.content.decode()
 
 
